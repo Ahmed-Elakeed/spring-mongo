@@ -43,6 +43,7 @@ public class ItemService {
     public void getItemsByCategory(String category) {
         System.out.println("Getting items for the category " + category);
         List<GroceryItem> list = groceryItemRepo.findAll(category);
+        System.out.println("Result Filter ----------- : " + list);
 
         list.forEach(item -> System.out.println("Name: " + item.getName() + ", Quantity: " + item.getQuantity()));
     }
@@ -64,6 +65,7 @@ public class ItemService {
 
         return "";
     }
+
     public void updateCategoryName(String category) {
 
         // Change to this new value
@@ -87,5 +89,30 @@ public class ItemService {
     public void deleteGroceryItem(String id) {
         groceryItemRepo.deleteById(id);
         System.out.println("Item with id " + id + " deleted...");
+    }
+
+
+
+
+    // Rest used methods ////////////
+
+    public List<GroceryItem> getAllItems(Boolean showFlag) {
+        return this.groceryItemRepo.findAllWithResultFlag(showFlag ? 1 : 0);
+    }
+
+    public GroceryItem getItemById(String itemId) {
+        return this.groceryItemRepo.findById(itemId).orElse(null);
+    }
+
+    public GroceryItem saveItem(GroceryItem groceryItem) {
+        return this.groceryItemRepo.save(groceryItem);
+    }
+
+    public void deleteItemById(String itemId) {
+        this.groceryItemRepo.deleteById(itemId);
+    }
+
+    public GroceryItem updateItem(GroceryItem groceryItem) {
+        return this.groceryItemRepo.save(groceryItem);
     }
 }
